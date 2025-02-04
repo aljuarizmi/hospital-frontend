@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 
 @Injectable({
@@ -12,7 +12,16 @@ export class HttpService{
         let parametros=new HttpParams();
         parametros=parametros.append('cantidad',cantidad);
         parametros=parametros.append('pagina',pagina);
-        parametros=parametros.append('cantidad',textoBusqueda);
+        parametros=parametros.append('textoBusqueda',textoBusqueda);
         return this.httpCliente.get('http://localhost:50821/api/medico',{params:parametros})
+    }
+    eliminar(ids:number[]){
+        const option={
+            headers:new HttpHeaders({
+                'Content-Type':'application/json'
+            }),
+            body:ids
+        };
+        return this.httpCliente.delete('http://localhost:50821/api/medico',option)
     }
 }
