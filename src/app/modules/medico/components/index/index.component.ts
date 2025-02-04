@@ -8,15 +8,17 @@ import { HttpService } from '../../../../services/http.services';
   styleUrl: './index.component.css'
 })
 export class IndexComponent implements OnInit{
-/*constructor(private httpService:HttpService){
+  
+constructor(private httpService:HttpService){
 
-}*/
+}
   ngOnInit(): void {
-    //this.LeerTodo(10,0,'');
+    this.LeerTodo(10,0,'');
   }
-  /*LeerTodo(cantidad:number,pagina:number,textoBusqueda:string){
+  //let miservicio=new HttpService();
+  LeerTodo(cantidad:number,pagina:number,textoBusqueda:string){
     this.httpService.LeerTodo(10,0,'').subscribe((respuesta:any)=>{
       console.log(respuesta);
     });
-  }*/
+  }
 }
