@@ -9,11 +9,14 @@ import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { FormsModule } from '@angular/forms';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import { ToastrModule } from 'ngx-toastr';
+//import {ToastrModule} from 'ngx-toastr';
+//import {ToastrService} from 'ngx-toastr';
+import {MatDialog,MatDialogModule} from '@angular/material/dialog';
+import { FormComponent } from '../form/form.component';
 
 @Component({
   selector: 'app-index',
-  imports: [MatToolbar,MatButtonModule,MatIconModule,MatFormFieldModule,MatInputModule,MatTableModule,MatPaginatorModule,FormsModule,MatTooltipModule,ToastrModule],
+  imports: [MatToolbar,MatButtonModule,MatIconModule,MatFormFieldModule,MatInputModule,MatTableModule,MatPaginatorModule,FormsModule,MatTooltipModule],
   templateUrl: './index.component.html',
   styleUrl: './index.component.css'
 })
@@ -25,8 +28,13 @@ export class IndexComponent implements OnInit{
   numeroDePagina=0;
   opcionesDePaginado:number[]=[1,5,10,25,100];
   textoBusqueda='';
-constructor(private httpService:HttpService){
-
+  //readonly dialog = inject(MatDialog);
+constructor(
+  private httpService:HttpService,
+  private dialog:MatDialog//,
+  //private toastr:ToastrService
+){
+//private toastr:ToastrService
 }
   ngOnInit(): void {
     //this.LeerTodo(10,0,'');
@@ -54,8 +62,26 @@ constructor(private httpService:HttpService){
       let ids=[medicoId];
       this.httpService.eliminar(ids).subscribe((respuesta:any)=>{
         //console.log(respuesta);
+        //this.toastr.success('Elemento eliminado satisfactoriamente','Confirmación');
         this.LeerTodo();
       });
     }
+  }
+  crearMedico(){
+    const dialogRef = this.dialog.open(FormComponent,{
+      disableClose:true,
+      autoFocus:true,
+      closeOnNavigation:false,
+      position:{top:'30px'},
+      width:'700px',
+      data:{
+        tipo:'crear'
+      }
+    });//codigo que abre la ventana modal
+    
+    //
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Dialog result: ${result}');
+    });
   }
 }
