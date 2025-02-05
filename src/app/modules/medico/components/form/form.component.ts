@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { HttpService } from '../../../../services/http.services';
 @Component({
   selector: 'app-form',
   imports: [MatDialogModule,MatButtonModule,MatRadioModule,MatFormFieldModule,MatInputModule,MatIconModule,MatSlideToggleModule,ReactiveFormsModule],
@@ -17,7 +18,13 @@ export class FormComponent implements OnInit{
   data = inject(MAT_DIALOG_DATA);
   readonly dialogRef = inject(MatDialogRef<FormComponent>);
   formGroup!:FormGroup;
-  constructor(private fb:FormBuilder){}
+  /*cedula='';
+  nombre='';
+  apellidoPaterno='';
+  apellidoMaterno='';
+  esEspecialista=false;
+  habilitado=false;*/
+  constructor(private fb:FormBuilder,private httpService:HttpService){}
 ngOnInit(): void {
   //console.log(this.data)
   this.initForm();
@@ -26,7 +33,20 @@ cancelar(){
   this.dialogRef.close();
 }
 guardar(){
-
+  //console.log(this.formGroup.get('habilitado')?.value)
+  //console.log(this.formGroup.get('cedula')?.value);
+  this.httpService.crear({
+    cedula:this.formGroup.get('cedula')?.value,
+    nombre:this.formGroup.get('nombre')?.value,
+    apellidoPaterno:this.formGroup.get('apellidoPaterno')?.value,
+    apellidoMaterno:this.formGroup.get('apellidoMaterno')?.value,
+    esEspecialista:this.formGroup.get('esEspecialista')?.value,
+    habilitado:this.formGroup.get('habilitado')?.value
+  }
+    ).subscribe((respuesta:any)=>{
+      this.dialogRef.close();
+    });
+  
 }
 initForm(){
 this.formGroup=this.fb.group({

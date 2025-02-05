@@ -81,7 +81,8 @@ constructor(
     
     //
     dialogRef.afterClosed().subscribe(result => {
-      console.log('Dialog result: ${result}');
+      //console.log('Dialog result: ${result}');
+      this.LeerTodo();
     });
   }
 }

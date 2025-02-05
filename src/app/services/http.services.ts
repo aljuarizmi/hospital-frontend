@@ -1,12 +1,11 @@
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-
+//import { MedicoI } from "../modules/medico/components/medico.interface";
 @Injectable({
     providedIn:'root'
 })
 export class HttpService{
     constructor(private httpCliente:HttpClient){
-
     }
     LeerTodo(cantidad:number,pagina:number,textoBusqueda:string){
         let parametros=new HttpParams();
@@ -22,6 +21,11 @@ export class HttpService{
             }),
             body:ids
         };
+        console.log(option.headers);
         return this.httpCliente.delete('http://localhost:50821/api/medico',option)
+    }
+    //crear(cedula:string,nombre:string,apellidoPaterno:string,apellidoMaterno:string,esEspecialista:boolean,habilitado:boolean){
+    crear(medico:any){
+        return this.httpCliente.post('http://localhost:50821/api/medico',medico);
     }
 }
