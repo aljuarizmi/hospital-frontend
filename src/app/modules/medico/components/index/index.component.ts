@@ -45,7 +45,7 @@ constructor(
     LeerTodo(){
       //alert('Hola');
     this.httpService.LeerTodo(this.cantidadPorPagina,this.numeroDePagina,this.textoBusqueda).subscribe((respuesta:any)=>{
-      //console.log(respuesta);
+      //console.log(respuesta.datos);
       this.dataSource.data=respuesta.datos.elemento;
       this.cantidadTotal=respuesta.datos.cantidadTotal;
     });
@@ -75,11 +75,27 @@ constructor(
       position:{top:'30px'},
       width:'700px',
       data:{
-        tipo:'crear'
+        tipo:'N',
+        medicoId:0
       }
     });//codigo que abre la ventana modal
-    
-    //
+    dialogRef.afterClosed().subscribe(result => {
+      //console.log('Dialog result: ${result}');
+      this.LeerTodo();
+    });
+  }
+  editarMedico(medicoId:number){
+    const dialogRef = this.dialog.open(FormComponent,{
+      disableClose:true,
+      autoFocus:true,
+      closeOnNavigation:false,
+      position:{top:'30px'},
+      width:'700px',
+      data:{
+        tipo:'E',
+        medicoId:medicoId
+      }
+    });//codigo que abre la ventana modal
     dialogRef.afterClosed().subscribe(result => {
       //console.log('Dialog result: ${result}');
       this.LeerTodo();

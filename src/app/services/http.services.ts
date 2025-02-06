@@ -28,4 +28,12 @@ export class HttpService{
     crear(medico:any){
         return this.httpCliente.post('http://localhost:50821/api/medico',medico);
     }
+    listarUno(id:number){
+        let parametros=new HttpParams();
+        parametros=parametros.append('id',id);
+        return this.httpCliente.get('http://localhost:50821/api/medico',{params:parametros})
+    }
+    actualizar(medico:any){
+        return this.httpCliente.put('http://localhost:50821/api/medico',medico);
+    }
 }
